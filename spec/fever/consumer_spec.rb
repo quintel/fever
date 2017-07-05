@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Fever::Consumer do
-  let(:demand_curve) { Merit::Curve.new([1.0, 2.0, 3.0, 4.0]) }
+  let(:demand_curve) { Fever.curve([1.0, 2.0, 3.0, 4.0]) }
   let(:consumer)     { Fever::Consumer.new(demand_curve) }
 
   it 'has a demand curve' do

@@ -11,7 +11,7 @@ module Fever
     #
     # Returns a Consumer.
     def initialize(demand_curve)
-      @demand_curve = demand_curve
+      @demand_curve = Fever.curve(demand_curve)
     end
 
     # Public: Returns the demand of the Consumer in `frame`.
