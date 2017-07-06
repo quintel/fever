@@ -4,6 +4,7 @@ Bundler.setup(:default)
 require 'merit'
 
 require 'fever/consumer'
+require 'fever/producer'
 require 'fever/version'
 
 # Models the behaviour of heat processes (household heaters, heat buffers,
