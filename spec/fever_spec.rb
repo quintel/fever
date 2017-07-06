@@ -5,7 +5,7 @@ RSpec.describe Fever do
     expect(Fever::VERSION).not_to be nil
   end
 
-  describe '#curve' do
+  describe '.curve' do
     context 'given an array' do
       let(:array) { [1.0, 3.0, 5.0] }
 
@@ -34,6 +34,20 @@ RSpec.describe Fever do
       it 'raises an error' do
         expect { Fever.curve('') }.to raise_error(NoMethodError)
       end
+    end
+  end
+
+  describe '.empty_curve' do
+    it 'returns a Merit::Curve' do
+      expect(Fever.empty_curve).to be_a(Merit::Curve)
+    end
+
+    it 'has a length equal to Fever::FRAMES' do
+      expect(Fever.empty_curve.length).to eq(Fever::FRAMES)
+    end
+
+    it 'has defaults values to zero' do
+      expect(Fever.empty_curve.to_a.all?(&:zero?)).to be_truthy
     end
   end
 end
