@@ -17,4 +17,35 @@ RSpec.describe Fever::Consumer do
       expect(consumer.demand_at(1)).to eq(2.0)
     end
   end
+
+  describe '#receive' do
+    context 'when the consumer has not yet received anything' do
+      it 'returns the amount' do
+        expect(consumer.receive(0, 2.0)).to eq(2.0)
+      end
+
+      it 'sets the amount consumed' do
+        expect { consumer.receive(0, 2.0) }
+          .to change { consumer.load_curve.get(0) }.from(0).to(2)
+      end
+
+      it 'reduces demand' do
+        expect { consumer.receive(0, 0.5) }
+          .to change { consumer.demand_at(0) }.from(1.0).to(0.5)
+      end
+    end
+
+    context 'when the consumer has received 1.0 already' do
+      before { consumer.receive(0, 1.0) }
+
+      it 'returns the amount' do
+        expect(consumer.receive(0, 2.0)).to eq(2.0)
+      end
+
+      it 'sets the amount consumed' do
+        expect { consumer.receive(0, 2.0) }
+          .to change { consumer.load_curve.get(0) }.from(1).to(3)
+      end
+    end
+  end
 end
