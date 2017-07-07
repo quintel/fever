@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "benchmark/ips"
+require "fever"
+
+demand = 8760.times.map { rand }
+
+Benchmark.ips do |x|
+  x.report('Run activity') do
+    consumer = Fever::Consumer.new(demand)
+    producer = Fever::Producer.new(1.0)
+    activity = Fever::Activity.new(consumer, producer)
+
+    8760.times { |frame| activity.calculate(frame) }
+  end
+end
