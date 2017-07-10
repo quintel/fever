@@ -6,6 +6,7 @@ require 'merit'
 require 'fever/activity'
 require 'fever/calculator'
 require 'fever/consumer'
+require 'fever/deferrable_activity'
 require 'fever/producer'
 require 'fever/version'
 
