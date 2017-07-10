@@ -4,6 +4,7 @@ Bundler.setup(:default)
 require 'merit'
 
 require 'fever/activity'
+require 'fever/calculator'
 require 'fever/consumer'
 require 'fever/producer'
 require 'fever/version'
