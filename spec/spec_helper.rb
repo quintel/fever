@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'support/coverage'
 require 'fever'
+require 'pry'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
