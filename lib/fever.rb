@@ -8,6 +8,7 @@ require 'fever/calculator'
 require 'fever/consumer'
 require 'fever/deferrable_activity'
 require 'fever/producer'
+require 'fever/reserve_producer'
 require 'fever/version'
 
 # Models the behaviour of heat processes (household heaters, heat buffers,
