@@ -25,6 +25,11 @@ module Fever
       amount
     end
 
+    # Public: Returns the load in the requested `frame`.
+    def load_at(frame)
+      @load_curve.get(frame)
+    end
+
     # Public: Returns the demand of the Consumer in `frame`.
     #
     # Returns a numeric.

@@ -12,19 +12,19 @@ RSpec.describe Fever::DeferrableActivity do
       end
 
       it 'has production of 2.0 in frame 0' do
-        expect(producer.load_curve.get(0)).to eq(2.0)
+        expect(producer.load_at(0)).to eq(2.0)
       end
 
       it 'has production of 2.0 in frame 1' do
-        expect(producer.load_curve.get(1)).to eq(2.0)
+        expect(producer.load_at(1)).to eq(2.0)
       end
 
       it 'has production of 0.4 in frame 2' do
-        expect(producer.load_curve.get(2)).to be_within(1e-8).of(0.4)
+        expect(producer.load_at(2)).to be_within(1e-8).of(0.4)
       end
 
       it 'has no production in frame 3' do
-        expect(producer.load_curve.get(3)).to eq(0.0)
+        expect(producer.load_at(3)).to eq(0.0)
       end
     end
 
@@ -48,20 +48,20 @@ RSpec.describe Fever::DeferrableActivity do
       end
 
       it 'has production of 2.0 in frames 0..3' do
-        expect(Array.new(4) { |frame| producer.load_curve.get(frame) })
+        expect(Array.new(4) { |frame| producer.load_at(frame) })
           .to eq([2.0] * 4)
       end
 
       it 'has production of 2.0 in frame 4' do
-        expect(producer.load_curve.get(4)).to eq(2.0)
+        expect(producer.load_at(4)).to eq(2.0)
       end
 
       it 'has production of 0.4 in frame 5' do
-        expect(producer.load_curve.get(5)).to be_within(1e-8).of(0.4)
+        expect(producer.load_at(5)).to be_within(1e-8).of(0.4)
       end
 
       it 'has no production in frame 6' do
-        expect(producer.load_curve.get(6)).to eq(0.0)
+        expect(producer.load_at(6)).to eq(0.0)
       end
     end
 
@@ -82,19 +82,19 @@ RSpec.describe Fever::DeferrableActivity do
       end
 
       it 'has production of 2.0 in frame 0' do
-        expect(producer.load_curve.get(0)).to eq(2.0)
+        expect(producer.load_at(0)).to eq(2.0)
       end
 
       it 'has production of 2.0 in frame 1' do
-        expect(producer.load_curve.get(1)).to eq(2.0)
+        expect(producer.load_at(1)).to eq(2.0)
       end
 
       it 'has production of 2.0 in frame 2' do
-        expect(producer.load_curve.get(2)).to eq(2.0)
+        expect(producer.load_at(2)).to eq(2.0)
       end
 
       it 'has no production in frame 3' do
-        expect(producer.load_curve.get(3)).to eq(0.0)
+        expect(producer.load_at(3)).to eq(0.0)
       end
     end
   end # with capacity of 2.0 and expiry after 2 frames
@@ -119,15 +119,15 @@ RSpec.describe Fever::DeferrableActivity do
       end
 
       it 'has production of 2.0 in frame 0' do
-        expect(producer.load_curve.get(0)).to eq(2.0)
+        expect(producer.load_at(0)).to eq(2.0)
       end
 
       it 'has production of 2.0 in frame 1' do
-        expect(producer.load_curve.get(1)).to eq(2.0)
+        expect(producer.load_at(1)).to eq(2.0)
       end
 
       it 'has no production in frame 2' do
-        expect(producer.load_curve.get(2)).to eq(0.0)
+        expect(producer.load_at(2)).to eq(0.0)
       end
     end
   end # with capacity of 2.0 and expiry after 2 frames

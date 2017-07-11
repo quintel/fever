@@ -11,11 +11,11 @@ RSpec.describe Fever::Calculator do
       let!(:result) { calculator.calculate_frame(0) }
 
       it 'sets the consumer load to 1.0' do
-        expect(consumer.load_curve.get(0)).to eq(1.0)
+        expect(consumer.load_at(0)).to eq(1.0)
       end
 
       it 'sets the producer load to 1.0' do
-        expect(producer.load_curve.get(0)).to eq(1.0)
+        expect(producer.load_at(0)).to eq(1.0)
       end
     end
 
@@ -23,11 +23,11 @@ RSpec.describe Fever::Calculator do
       let!(:result) { calculator.calculate_frame(1) }
 
       it 'sets the consumer load to 1.5' do
-        expect(consumer.load_curve.get(1)).to eq(1.5)
+        expect(consumer.load_at(1)).to eq(1.5)
       end
 
       it 'sets the producer load to 1.5' do
-        expect(producer.load_curve.get(1)).to eq(1.5)
+        expect(producer.load_at(1)).to eq(1.5)
       end
     end
   end # with producer capacity 1.5
@@ -39,11 +39,11 @@ RSpec.describe Fever::Calculator do
       let!(:result) { calculator.calculate_frame(0) }
 
       it 'sets the consumer load to 0.5' do
-        expect(consumer.load_curve.get(0)).to eq(0.5)
+        expect(consumer.load_at(0)).to eq(0.5)
       end
 
       it 'sets the producer load to 0.5' do
-        expect(producer.load_curve.get(0)).to eq(0.5)
+        expect(producer.load_at(0)).to eq(0.5)
       end
     end
 
@@ -51,11 +51,11 @@ RSpec.describe Fever::Calculator do
       let!(:result) { calculator.calculate_frame(1) }
 
       it 'sets the consumer load to 1.0' do
-        expect(consumer.load_curve.get(1)).to eq(1.0)
+        expect(consumer.load_at(1)).to eq(1.0)
       end
 
       it 'sets the producer load to 1.0' do
-        expect(producer.load_curve.get(1)).to eq(1.0)
+        expect(producer.load_at(1)).to eq(1.0)
       end
     end
 
@@ -63,11 +63,11 @@ RSpec.describe Fever::Calculator do
       let!(:result) { calculator.calculate_frame(2) }
 
       it 'sets the consumer load to 1.5' do
-        expect(consumer.load_curve.get(2)).to eq(1.5)
+        expect(consumer.load_at(2)).to eq(1.5)
       end
 
       it 'sets the producer load to 1.5' do
-        expect(producer.load_curve.get(2)).to eq(1.5)
+        expect(producer.load_at(2)).to eq(1.5)
       end
     end
   end # with producer capacity 1.5, share 0.5

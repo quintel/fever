@@ -27,7 +27,7 @@ RSpec.describe Fever::ReserveProducer do
 
         it 'has a load of 2.5' do
           expect { request }
-            .to change { producer.load_curve.get(0) }.from(0).to(2.5)
+            .to change { producer.load_at(0) }.from(0).to(2.5)
         end
 
         it 'reduces stored energy to 0.0' do
@@ -45,7 +45,7 @@ RSpec.describe Fever::ReserveProducer do
 
         it 'has a load of 2.5' do
           expect { request }
-            .to change { producer.load_curve.get(0) }.from(0).to(2.5)
+            .to change { producer.load_at(0) }.from(0).to(2.5)
         end
 
         it 'reduces stored energy to 0.0' do
@@ -67,7 +67,7 @@ RSpec.describe Fever::ReserveProducer do
 
         it 'has a load of 2.0' do
           expect { request }
-            .to change { producer.load_curve.get(0) }.from(0).to(2.0)
+            .to change { producer.load_at(0) }.from(0).to(2.0)
         end
 
         it 'reduces stored energy to 5.5' do
@@ -85,7 +85,7 @@ RSpec.describe Fever::ReserveProducer do
 
           it 'has a load of 4.5' do
             expect { second_request }
-              .to change { producer.load_curve.get(0) }.from(2.0).to(4.5)
+              .to change { producer.load_at(0) }.from(2.0).to(4.5)
           end
 
           it 'reduces stored energy to 3.0' do
@@ -104,7 +104,7 @@ RSpec.describe Fever::ReserveProducer do
 
         it 'has a load of 5.0' do
           expect { request }
-            .to change { producer.load_curve.get(0) }.from(0).to(5.0)
+            .to change { producer.load_at(0) }.from(0).to(5.0)
         end
 
         it 'reduces stored energy to 2.5' do
@@ -122,7 +122,7 @@ RSpec.describe Fever::ReserveProducer do
 
           it 'does not change the producer load' do
             expect { second_request }
-              .not_to change { producer.load_curve.get(0) }.from(5.0)
+              .not_to change { producer.load_at(0) }.from(5.0)
           end
 
           it 'does not reduce stored energy' do
@@ -141,7 +141,7 @@ RSpec.describe Fever::ReserveProducer do
 
         it 'has a load of 5.0' do
           expect { request }
-            .to change { producer.load_curve.get(0) }.from(0).to(5.0)
+            .to change { producer.load_at(0) }.from(0).to(5.0)
         end
 
         it 'reduces stored energy to 2.5' do

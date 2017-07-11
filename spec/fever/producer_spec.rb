@@ -16,7 +16,7 @@ RSpec.describe Fever::Producer do
       end
 
       it 'sets the load curve in frame 0 to 3.0' do
-        expect(producer.load_curve.get(0)).to eq(3)
+        expect(producer.load_at(0)).to eq(3)
       end
 
       context 'when requesting another 1.0' do
@@ -27,7 +27,7 @@ RSpec.describe Fever::Producer do
         end
 
         it 'sets the load curve in frame 0 to 4.0' do
-          expect(producer.load_curve.get(0)).to eq(4.0)
+          expect(producer.load_at(0)).to eq(4.0)
         end
 
         it 'permits a third request' do
@@ -43,7 +43,7 @@ RSpec.describe Fever::Producer do
         end
 
         it 'sets the load curve in frame 0 to 5.0' do
-          expect(producer.load_curve.get(0)).to eq(5.0)
+          expect(producer.load_at(0)).to eq(5.0)
         end
 
         it 'permits no further requests' do
@@ -59,7 +59,7 @@ RSpec.describe Fever::Producer do
         end
 
         it 'sets the load curve in frame 0 to 5.0' do
-          expect(producer.load_curve.get(0)).to eq(5.0)
+          expect(producer.load_at(0)).to eq(5.0)
         end
 
         it 'permits no further requests' do
@@ -75,7 +75,7 @@ RSpec.describe Fever::Producer do
         end
 
         it 'sets the load curve in frame 1 to 5.0' do
-          expect(producer.load_curve.get(1)).to eq(5.0)
+          expect(producer.load_at(1)).to eq(5.0)
         end
       end
     end

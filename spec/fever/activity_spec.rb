@@ -13,7 +13,7 @@ RSpec.describe Fever::Activity do
       end
 
       it 'sets the producer load to 1.5' do
-        expect(producer.load_curve.get(0)).to eq(1.0)
+        expect(producer.load_at(0)).to eq(1.0)
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe Fever::Activity do
       end
 
       it 'sets the producer load to 1.5' do
-        expect(producer.load_curve.get(0)).to eq(1.5)
+        expect(producer.load_at(0)).to eq(1.5)
       end
     end
   end

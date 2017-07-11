@@ -13,6 +13,11 @@ module Fever
       @load_curve = Fever.empty_curve
     end
 
+    # Public: Returns the load in the requested `frame`.
+    def load_at(frame)
+      @load_curve.get(frame)
+    end
+
     # Public: Requests an `amount` of energy from the producer.
     #
     # If the producer has insufficient capacity to fulfil the request, the

@@ -26,7 +26,7 @@ RSpec.describe Fever::Consumer do
 
       it 'sets the amount consumed' do
         expect { consumer.receive(0, 2.0) }
-          .to change { consumer.load_curve.get(0) }.from(0).to(2)
+          .to change { consumer.load_at(0) }.from(0).to(2)
       end
 
       it 'reduces demand' do
@@ -44,7 +44,7 @@ RSpec.describe Fever::Consumer do
 
       it 'sets the amount consumed' do
         expect { consumer.receive(0, 2.0) }
-          .to change { consumer.load_curve.get(0) }.from(1).to(3)
+          .to change { consumer.load_at(0) }.from(1).to(3)
       end
     end
   end
