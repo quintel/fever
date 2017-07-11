@@ -21,20 +21,20 @@ module Fever
     #
     # Returns the amount.
     def receive(frame, amount)
-      @load_curve.set(frame, @load_curve.get(frame) + amount)
+      @load_curve[frame] += amount
       amount
     end
 
     # Public: Returns the load in the requested `frame`.
     def load_at(frame)
-      @load_curve.get(frame)
+      @load_curve[frame]
     end
 
     # Public: Returns the demand of the Consumer in `frame`.
     #
     # Returns a numeric.
     def demand_at(frame)
-      @demand_curve.get(frame) - @load_curve.get(frame)
+      @demand_curve[frame] - @load_curve[frame]
     end
   end
 end

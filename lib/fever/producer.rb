@@ -15,7 +15,7 @@ module Fever
 
     # Public: Returns the load in the requested `frame`.
     def load_at(frame)
-      @load_curve.get(frame)
+      @load_curve[frame]
     end
 
     # Public: Requests an `amount` of energy from the producer.
@@ -25,11 +25,11 @@ module Fever
     #
     # Returns the amount of energy produced.
     def request(frame, amount)
-      current_use = @load_curve.get(frame)
+      current_use = @load_curve[frame]
       available   = @capacity - current_use
       amount      = available if amount > available
 
-      @load_curve.set(frame, current_use + amount)
+      @load_curve[frame] += amount
 
       amount
     end

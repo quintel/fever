@@ -25,13 +25,25 @@ module Fever
   #
   # Returns a Merit::Curve.
   def curve(enum)
-    enum.is_a?(Merit::Curve) ? enum : Merit::Curve.new(enum.to_a)
+    length = enum.length
+
+    return enum.to_a.dup if length == FRAMES
+
+    if length > FRAMES
+      raise(
+        ArgumentError,
+        "Input curve has too many items (#{ enum.length }), " \
+        "must not exceed #{ Fever::FRAMES }"
+      )
+    end
+
+    enum.to_a + Array.new(FRAMES - enum.length, 0.0)
   end
 
   # Public: Creates a new empty Curve.
   #
-  # Returns a Merit::Curve.
+  # Returns an Array.
   def empty_curve
-    Merit::Curve.new([], FRAMES)
+    Array.new(FRAMES, 0.0)
   end
 end
