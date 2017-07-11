@@ -13,4 +13,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  # Enable auto-focus only when running locally
+  config.filter_run_including(focus: !ENV['CI'])
+  config.run_all_when_everything_filtered = true
 end
