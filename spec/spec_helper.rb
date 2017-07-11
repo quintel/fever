@@ -1,7 +1,12 @@
 require 'bundler/setup'
 require 'support/coverage'
 require 'fever'
-require 'pry'
+
+begin
+  require 'pry'
+rescue LoadError
+  puts 'Pry not installed; binding.pry will be unavailable.'
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
