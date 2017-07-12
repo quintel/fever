@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Fever::ReserveProducer do
-  describe 'with a capacity of 5.0 and reserve volume of 10.0' do
+  describe 'with an output capacity of 5.0 and reserve volume of 10.0' do
     let(:reserve) { Merit::Flex::Reserve.new(10.0) }
     let(:producer) { Fever::ReserveProducer.new(5.0, reserve) }
 
@@ -13,7 +13,31 @@ RSpec.describe Fever::ReserveProducer do
       it 'denies a request for 1.0' do
         expect(producer.request(0, 1.0)).to eq(0.0)
       end
-    end
+
+      context 'storing 6.0' do
+        let(:store_excess) { producer.store_excess(0, 6.0) }
+
+        it 'returns 6.0' do
+          expect(store_excess).to eq(6.0)
+        end
+
+        it 'adds 6.0 energy to the reserve' do
+          expect { store_excess }.to change { reserve.at(0) }.from(0).to(6)
+        end
+      end
+
+      context 'storing 11' do
+        let(:store_excess) { producer.store_excess(0, 11.0) }
+
+        it 'returns 10.0' do
+          expect(store_excess).to eq(10.0)
+        end
+
+        it 'adds 10 energy to the reserve' do
+          expect { store_excess }.to change { reserve.at(0) }.from(0).to(10)
+        end
+      end
+    end # when empty
 
     context 'with 2.5 stored' do
       before { reserve.add(0, 2.5) }
@@ -51,6 +75,30 @@ RSpec.describe Fever::ReserveProducer do
         it 'reduces stored energy to 0.0' do
           expect { request }
             .to change { reserve.at(0) }.from(2.5).to(0)
+        end
+      end
+
+      context 'storing 6.0' do
+        let(:store_excess) { producer.store_excess(0, 6.0) }
+
+        it 'returns 6.0' do
+          expect(store_excess).to eq(6.0)
+        end
+
+        it 'adds 6.0 energy to the reserve' do
+          expect { store_excess }.to change { reserve.at(0) }.from(2.5).to(8.5)
+        end
+      end
+
+      context 'storing 11' do
+        let(:store_excess) { producer.store_excess(0, 11.0) }
+
+        it 'returns 7.5' do
+          expect(store_excess).to eq(7.5)
+        end
+
+        it 'adds 7.5 energy to the reserve' do
+          expect { store_excess }.to change { reserve.at(0) }.from(2.5).to(10)
         end
       end
     end # with 2.5 stored
@@ -151,4 +199,51 @@ RSpec.describe Fever::ReserveProducer do
       end
     end # with 7.5 stored
   end # with a capacity of 5.0 and reserve volume of 10.0
+
+  context 'with an input capacity of 2.0 and efficiency of 0.75' do
+    let(:reserve) { Merit::Flex::Reserve.new(10.0) }
+
+    let(:producer) do
+      Fever::ReserveProducer.new(
+        5.0, reserve,
+        input_capacity: 2.0, input_efficiency: 0.75
+      )
+    end
+
+    context 'storing 1.0' do
+      let(:store_excess) { producer.store_excess(0, 1.0) }
+
+      it 'returns 1.0' do
+        expect(store_excess).to eq(1.0)
+      end
+
+      it 'adds 0.75 to the reserve' do
+        expect { store_excess }.to change { reserve.at(0) }.from(0).to(0.75)
+      end
+    end
+
+    context 'storing 2.0' do
+      let(:store_excess) { producer.store_excess(0, 2.0) }
+
+      it 'returns 2.0' do
+        expect(store_excess).to eq(2.0)
+      end
+
+      it 'adds 1.5 to the reserve' do
+        expect { store_excess }.to change { reserve.at(0) }.from(0).to(1.5)
+      end
+    end
+
+    context 'storing 5.0' do
+      let(:store_excess) { producer.store_excess(0, 5.0) }
+
+      it 'returns 2.0' do
+        expect(store_excess).to eq(2.0)
+      end
+
+      it 'adds 1.5 to the reserve' do
+        expect { store_excess }.to change { reserve.at(0) }.from(0).to(1.5)
+      end
+    end
+  end
 end
