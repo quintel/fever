@@ -3,11 +3,13 @@ Bundler.setup(:default)
 
 require 'merit'
 
+require 'fever/producer'
+
 require 'fever/activity'
 require 'fever/calculator'
+require 'fever/composite_producer'
 require 'fever/consumer'
 require 'fever/deferrable_activity'
-require 'fever/producer'
 require 'fever/reserve_producer'
 require 'fever/version'
 
