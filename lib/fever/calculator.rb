@@ -16,6 +16,10 @@ module Fever
     def initialize(consumer, activities)
       @consumer   = consumer
       @activities = activities
+
+      @storage = activities.map(&:producer).select do |prod|
+        prod.respond_to?(:store_excess)
+      end
     end
 
     # Public: Calculates demand and supply for a single frame.
@@ -29,6 +33,17 @@ module Fever
           frame,
           activity.request(frame, demand * activity.share)
         )
+      end
+    end
+
+    # Public: Stores excess energy.
+    #
+    # Returns nothing.
+    def store_excess(frame, amount)
+      return 0.0 if amount.zero?
+
+      @storage.each do |prod|
+        amount -= prod.store_excess(frame, amount)
       end
     end
   end
