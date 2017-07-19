@@ -18,5 +18,13 @@ module Fever
     def request(frame, amount)
       @producer.request(frame, amount)
     end
+
+    def inspect
+      "#<#{ self.class.name } producer=#{ @producer } share=#{ @share }>"
+    end
+
+    def to_s
+      "#{ self.class.name }(#{ @producer } @ #{ @share })"
+    end
   end
 end

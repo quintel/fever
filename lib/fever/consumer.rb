@@ -36,5 +36,13 @@ module Fever
     def demand_at(frame)
       @demand_curve[frame] - @load_curve[frame]
     end
+
+    def inspect
+      "#<#{ self }>"
+    end
+
+    def to_s
+      self.class.name
+    end
   end
 end

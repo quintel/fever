@@ -33,5 +33,13 @@ module Fever
 
       amount
     end
+
+    def inspect
+      "#<#{ self }>"
+    end
+
+    def to_s
+      self.class.name
+    end
   end
 end
