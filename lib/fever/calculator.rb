@@ -45,7 +45,7 @@ module Fever
       remaining = amount
 
       @storage.each do |prod|
-        remaining -= prod.store_excess(frame, amount)
+        remaining -= prod.store_excess(frame, remaining)
       end
 
       amount - remaining

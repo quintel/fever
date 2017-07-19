@@ -89,7 +89,7 @@ RSpec.describe Fever::Calculator do
     end
 
     context 'storing 3.0' do
-      let(:store_excess) { calculator.store_excess(0, 3.0)}
+      let(:store_excess) { calculator.store_excess(0, 3.0) }
 
       it 'assigns 2.0 to the first producer' do
         expect { store_excess }.to change { prod1.reserve.at(0) }.from(0).to(2)
