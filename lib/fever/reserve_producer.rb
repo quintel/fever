@@ -24,7 +24,10 @@ module Fever
     # capacity and availability of the reserve.
     def store_excess(frame, amount)
       amount = @input_capacity if amount > @input_capacity
-      @reserve.add(frame, amount * @input_efficiency) / @input_efficiency
+      converted = amount * @input_efficiency
+
+      @load_curve[frame] -= converted
+      @reserve.add(frame, converted) / @input_efficiency
     end
 
     def request(frame, amount)

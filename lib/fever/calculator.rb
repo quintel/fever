@@ -38,13 +38,17 @@ module Fever
 
     # Public: Stores excess energy.
     #
-    # Returns nothing.
+    # Returns the amount stored.
     def store_excess(frame, amount)
       return 0.0 if amount.zero?
 
+      remaining = amount
+
       @storage.each do |prod|
-        amount -= prod.store_excess(frame, amount)
+        remaining -= prod.store_excess(frame, amount)
       end
+
+      amount - remaining
     end
   end
 end
