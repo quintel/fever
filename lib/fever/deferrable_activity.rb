@@ -20,8 +20,8 @@ module Fever
     #                fulfil.
     #
     # Returns a DeferrableActivity.
-    def initialize(*args, expire_after: 4)
-      super(*args)
+    def initialize(*args, expire_after: 4, **kwargs)
+      super(*args, **kwargs)
       @deferments = []
       @expire_after = expire_after
     end

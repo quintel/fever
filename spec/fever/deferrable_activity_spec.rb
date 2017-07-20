@@ -131,4 +131,14 @@ RSpec.describe Fever::DeferrableActivity do
       end
     end
   end # with capacity of 2.0 and expiry after 2 frames
+
+  context 'with share of 0.5' do
+    let(:activity) do
+      Fever::DeferrableActivity.new(producer, expire_after: 2, share: 0.5)
+    end
+
+    it 'sets the share' do
+      expect(activity.share).to eq(0.5)
+    end
+  end
 end
