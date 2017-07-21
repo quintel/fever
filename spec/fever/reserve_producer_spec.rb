@@ -21,8 +21,17 @@ RSpec.describe Fever::ReserveProducer do
           expect(store_excess).to eq(6.0)
         end
 
+        it 'sets a load of -6' do
+          expect { store_excess }.to change { producer.load_at(0) }.to eq(-6)
+        end
+
         it 'adds 6.0 energy to the reserve' do
           expect { store_excess }.to change { reserve.at(0) }.from(0).to(6)
+        end
+
+        it 'has input of 6.0' do
+          expect { store_excess }
+            .to change { producer.input_at(0) }.from(0).to(6)
         end
       end
 
@@ -33,8 +42,17 @@ RSpec.describe Fever::ReserveProducer do
           expect(store_excess).to eq(10.0)
         end
 
+        it 'sets a load of -10' do
+          expect { store_excess }.to change { producer.load_at(0) }.to eq(-10)
+        end
+
         it 'adds 10 energy to the reserve' do
           expect { store_excess }.to change { reserve.at(0) }.from(0).to(10)
+        end
+
+        it 'has input of 10.0' do
+          expect { store_excess }
+            .to change { producer.input_at(0) }.from(0).to(10)
         end
       end
     end # when empty
@@ -217,6 +235,11 @@ RSpec.describe Fever::ReserveProducer do
         expect(store_excess).to eq(1.0)
       end
 
+      it 'sets a load of -0.75' do
+        expect { store_excess }
+          .to change { producer.load_at(0) }.from(0).to(-0.75)
+      end
+
       it 'adds 0.75 to the reserve' do
         expect { store_excess }.to change { reserve.at(0) }.from(0).to(0.75)
       end
@@ -229,6 +252,11 @@ RSpec.describe Fever::ReserveProducer do
         expect(store_excess).to eq(2.0)
       end
 
+      it 'sets a load of -1.5' do
+        expect { store_excess }
+          .to change { producer.load_at(0) }.from(0).to(-1.5)
+      end
+
       it 'adds 1.5 to the reserve' do
         expect { store_excess }.to change { reserve.at(0) }.from(0).to(1.5)
       end
@@ -239,6 +267,11 @@ RSpec.describe Fever::ReserveProducer do
 
       it 'returns 2.0' do
         expect(store_excess).to eq(2.0)
+      end
+
+      it 'sets a load of -1.5' do
+        expect { store_excess }
+          .to change { producer.load_at(0) }.from(0).to(-1.5)
       end
 
       it 'adds 1.5 to the reserve' do

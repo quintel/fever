@@ -4,14 +4,10 @@ module Fever
   class ReserveProducer < Producer
     attr_reader :reserve
 
-    def initialize(
-      capacity, reserve,
-      input_capacity: Float::INFINITY, input_efficiency: 1.0
-    )
-      super(capacity)
+    def initialize(capacity, reserve, input_capacity: Float::INFINITY, **kwargs)
+      super(capacity, **kwargs)
       @reserve = reserve
       @input_capacity = input_capacity
-      @input_efficiency = input_efficiency
     end
 
     # Public: Adds an amount of energy to the reserve.
@@ -24,10 +20,17 @@ module Fever
     # capacity and availability of the reserve.
     def store_excess(frame, amount)
       amount = @input_capacity if amount > @input_capacity
-      converted = amount * @input_efficiency
+      converted = amount * @input_efficiency[frame]
 
-      @load_curve[frame] -= converted
-      @reserve.add(frame, converted) / @input_efficiency
+      added = @reserve.add(frame, converted)
+      @load_curve[frame] -= added
+
+      added / @input_efficiency[frame]
+    end
+
+    def input_at(frame)
+      return 0.0 if @load_curve[frame] > 0
+      @load_curve[frame].abs / @input_efficiency[frame]
     end
 
     def request(frame, amount)
