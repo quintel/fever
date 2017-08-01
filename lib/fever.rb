@@ -28,6 +28,10 @@ module Fever
   #
   # Returns a Merit::Curve.
   def curve(base)
+    if base.respond_to?(:to_curve) && base.length == Fever::FRAMES
+      return base.to_curve
+    end
+
     case base
     when Numeric then curve_from_numeric(base)
     when Enumerable then curve_from_enum(base)
@@ -58,7 +62,9 @@ module Fever
   def curve_from_enum(enum)
     length = enum.length
 
-    return enum.to_a.dup if length == FRAMES
+    if length == FRAMES
+      return enum.respond_to?(:to_curve) ? enum.to_curve : enum.to_a.dup
+    end
 
     if length > FRAMES
       raise(

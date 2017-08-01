@@ -92,6 +92,34 @@ RSpec.describe Fever do
       end
     end
 
+    context 'with something responding to #to_curve' do
+      context 'and length == 0' do
+        let(:input) do
+          dbl = double('Arrayish', length: 0)
+          allow(dbl).to receive(:to_curve).and_return(dbl)
+          dbl
+        end
+
+        it 'runs #to_curve on the object' do
+          expect { curve }
+            .to raise_error(ArgumentError, /cannot create a curve from/)
+        end
+      end
+
+      context 'and length == Fever::FRAMES' do
+        let(:input) do
+          dbl = double('Arrayish', length: Fever::FRAMES)
+          allow(dbl).to receive(:to_curve).and_return(dbl)
+          dbl
+        end
+
+        it 'runs #to_curve on the object' do
+          expect(input).to receive(:to_curve)
+          curve
+        end
+      end
+    end
+
     context 'given a non-enum' do
       it 'raises an error' do
         expect { Fever.curve('') }
