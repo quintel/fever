@@ -7,6 +7,7 @@ RSpec.describe Fever do
 
   describe '.curve' do
     let(:curve) { Fever.curve(input) }
+
     context 'given an array of 3 elements' do
       let(:input) { [1.0, 3.0, 5.0] }
 
@@ -75,9 +76,26 @@ RSpec.describe Fever do
       end
     end
 
+    context 'given a numeric' do
+      let(:input) { 2.0 }
+
+      it 'returns an array' do
+        expect(curve).to be_an(Array)
+      end
+
+      it 'has Fever::FRAMES length' do
+        expect(curve.length).to eq(Fever::FRAMES)
+      end
+
+      it 'initialized each value to equal the numeric' do
+        expect(curve.all? { |v| v == input }).to be(true)
+      end
+    end
+
     context 'given a non-enum' do
       it 'raises an error' do
-        expect { Fever.curve('') }.to raise_error(NoMethodError)
+        expect { Fever.curve('') }
+          .to raise_error(ArgumentError, /cannot create a curve from/)
       end
     end
   end

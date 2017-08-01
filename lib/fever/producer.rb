@@ -11,12 +11,7 @@ module Fever
     def initialize(capacity, input_efficiency: 1.0)
       @capacity = capacity
       @load_curve = Fever.empty_curve
-
-      if input_efficiency.is_a?(Array)
-        @input_efficiency = Fever.curve(input_efficiency)
-      else
-        @input_efficiency = [input_efficiency] * Fever::FRAMES
-      end
+      @input_efficiency = Fever.curve(input_efficiency)
     end
 
     # Public: Returns the load in the requested `frame`.
