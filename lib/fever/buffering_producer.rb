@@ -26,19 +26,20 @@ module Fever
     def request(frame, amount)
       @load_curve[frame] += taken = take_from_reserve(frame, amount)
 
+      capacity = @capacity[frame]
       deficit = amount - taken
       instantaneous = 0.0
 
       # If demand exceeds the amount stored, run the heat pump...
       if deficit > 0
-        instantaneous = deficit > @capacity ? @capacity : deficit
+        instantaneous = deficit > capacity ? capacity : deficit
 
         @load_curve[frame] += instantaneous
         @input_load[frame] += instantaneous
       end
 
       # If there is still available capacity, run to fill up the buffer.
-      if (remaining_cap = @capacity - instantaneous) > 0
+      if (remaining_cap = capacity - instantaneous) > 0
         @input_load[frame] += @reserve.add(frame, remaining_cap)
       end
 

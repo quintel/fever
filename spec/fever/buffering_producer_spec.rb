@@ -158,6 +158,46 @@ module Fever
           end
         end
       end # with 7.5 stored
-    end
+    end # with an output capacity of 5.0 and a reserve volume of 10.0
+
+    context 'with an output capacity of [5.0, 2.5, ...] and 1.0 stored' do
+      let(:reserve)  { Merit::Flex::Reserve.new(1.0) }
+      let(:producer) { BufferingProducer.new([5.0, 2.5], reserve) }
+
+      before { reserve.add(0, 1.0) }
+
+      context 'requesting 4.0 in frame 0' do
+        let!(:request) { producer.request(0, 4.0) }
+
+        it 'returns 4.0' do
+          expect(request).to eq(4)
+        end
+
+        it 'sets the load curve in frame 0 to 4.0' do
+          expect(producer.load_at(0)).to eq(4)
+        end
+
+        it 'has input of 4.0' do
+          expect(producer.input_at(0)).to eq(4)
+        end
+      end
+
+      context 'requesting 4.0 in frame 1' do
+        let!(:request) { producer.request(1, 4.0) }
+
+        it 'returns 3.5' do
+          expect(request).to eq(3.5)
+        end
+
+        it 'sets the load curve in frame 0 to 3.5' do
+          expect(producer.load_at(1)).to eq(3.5)
+        end
+
+        it 'has input of 2.5' do
+          expect(producer.input_at(1)).to eq(2.5)
+        end
+      end
+    end # with a capacity of [5.0, 2.5, ...] and 1.0 stored
+
   end
 end # Fever

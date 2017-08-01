@@ -5,7 +5,7 @@ RSpec.describe Fever::Producer do
     let(:producer) { Fever::Producer.new(5.0) }
 
     it 'has a capacity of 5' do
-      expect(producer.capacity).to eq(5)
+      expect(producer.capacity.first).to eq(5)
     end
 
     context 'requesting 3.0 in frame 0' do
@@ -158,4 +158,42 @@ RSpec.describe Fever::Producer do
       end
     end
   end # with a capacity of 6.0 and input efficiency [1, 0.5, 0.25]
+
+  context 'with a capacity of [5.0, 2.5, ...]' do
+    let(:producer) do
+      Fever::Producer.new([5.0, 2.5])
+    end
+
+    context 'requesting 4.0 in frame 0' do
+      let!(:request) { producer.request(0, 4.0) }
+
+      it 'returns 4.0' do
+        expect(request).to eq(4)
+      end
+
+      it 'sets the load curve in frame 0 to 4.0' do
+        expect(producer.load_at(0)).to eq(4)
+      end
+
+      it 'has input of 4.0' do
+        expect(producer.input_at(0)).to eq(4)
+      end
+    end
+
+    context 'requesting 4.0 in frame 1' do
+      let!(:request) { producer.request(1, 4.0) }
+
+      it 'returns 2.5' do
+        expect(request).to eq(2.5)
+      end
+
+      it 'sets the load curve in frame 0 to 2.5' do
+        expect(producer.load_at(1)).to eq(2.5)
+      end
+
+      it 'has input of 2.5' do
+        expect(producer.input_at(1)).to eq(2.5)
+      end
+    end
+  end # with a capacity of [5.0, 2.5, ...]
 end

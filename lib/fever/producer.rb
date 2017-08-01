@@ -9,7 +9,7 @@ module Fever
     attr_reader :load_curve
 
     def initialize(capacity, input_efficiency: 1.0)
-      @capacity = capacity
+      @capacity = Fever.curve(capacity)
       @load_curve = Fever.empty_curve
       @input_efficiency = Fever.curve(input_efficiency)
     end
@@ -33,7 +33,7 @@ module Fever
     # Returns the amount of energy produced.
     def request(frame, amount)
       current_use = @load_curve[frame]
-      available   = @capacity - current_use
+      available   = @capacity[frame] - current_use
       amount      = available if amount > available
 
       @load_curve[frame] += amount
