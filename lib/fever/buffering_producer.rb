@@ -3,6 +3,8 @@ module Fever
   # Energy is taken preferentially from the buffer to meet demand, and then the
   # producer will run to satisfy any remaining.
   class BufferingProducer < ReserveProducer
+    attr_reader :input_load
+
     def initialize(*)
       super
 
