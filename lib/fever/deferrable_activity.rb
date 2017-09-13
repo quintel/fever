@@ -27,11 +27,18 @@ module Fever
     end
 
     def request(frame, amount)
+      orig_demand = @demand
+
       # Drop expired deferments.
       @deferments.reject! { |df| df.expire_at < frame }
 
       produced = super(frame, amount + outstanding_demand)
       available = produced - fulfil_deferments(produced)
+
+      # Set the new total demand on this node. This needs to be done because
+      # the above call to super() will have incorrectly included deferred
+      # demand which is already included in the figure for prior hours.
+      @demand = orig_demand + amount
 
       if available < amount
         @deferments.push(

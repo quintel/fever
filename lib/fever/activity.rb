@@ -4,18 +4,21 @@ module Fever
   class Activity
     attr_reader :producer
     attr_reader :share
+    attr_reader :demand
 
     # Creates a new Activity wrapping the given producer, with an optional
     # share.
     def initialize(producer, share: 1.0)
       @producer = producer
       @share    = share
+      @demand   = 0.0
     end
 
     # Public: Calculates the activity in the chosen frame.
     #
     # Returns the amount of energy used.
     def request(frame, amount)
+      @demand += amount
       @producer.request(frame, amount)
     end
 

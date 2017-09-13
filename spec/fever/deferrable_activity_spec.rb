@@ -26,6 +26,11 @@ RSpec.describe Fever::DeferrableActivity do
       it 'has no production in frame 3' do
         expect(producer.load_at(3)).to eq(0.0)
       end
+
+      it 'has activity demand of 4.4' do
+        # 2.2 in two frames, 0.0 in two. Deferred demands are not counted twice.
+        expect(activity.demand).to eq(4.4)
+      end
     end
 
     context 'demand of 2.6 for four frames' do
