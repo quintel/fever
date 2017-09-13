@@ -72,6 +72,56 @@ RSpec.describe Fever::Calculator do
     end
   end # with producer capacity 1.5, share 0.5
 
+  context 'with two producers in separate groups, capacity 2.0, ' \
+          'shares 1.0 and 0.5' do
+    let(:prod1) { Fever::Producer.new(2.0) }
+    let(:prod2) { Fever::Producer.new(2.0) }
+
+    let(:calculator) do
+      Fever::Calculator.new(consumer, [
+        [Fever::Activity.new(prod1, share: 1.0)],
+        [Fever::Activity.new(prod2, share: 0.5)]
+      ])
+    end
+
+    describe 'total demand of 1.0' do
+      let!(:result) { calculator.calculate_frame(0) }
+
+      it 'assigns 1.0 to the first producer' do
+        expect(prod1.load_at(0)).to eq(1.0)
+      end
+
+      it 'assigns 0.0 to the first producer' do
+        expect(prod2.load_at(0)).to eq(0.0)
+      end
+    end
+
+    describe 'total demand of 2.0' do
+      let!(:result) { calculator.calculate_frame(1) }
+
+      it 'assigns 2.0 to the first producer' do
+        expect(prod1.load_at(1)).to eq(2.0)
+      end
+
+      it 'assigns 0.0 to the first producer' do
+        expect(prod2.load_at(1)).to eq(0.0)
+      end
+    end
+
+    describe 'total demand of 4.0' do
+      let!(:result) { calculator.calculate_frame(2) }
+
+      it 'assigns 2.0 to the first producer' do
+        expect(prod1.load_at(2)).to eq(2.0)
+      end
+
+      it 'assigns 1.0 to the first producer' do
+        # 2.0 demand remains after prod1, this activity has a share of 0.5
+        expect(prod2.load_at(2)).to eq(1.0)
+      end
+    end
+  end
+
   context 'with two reserve producers, capacity 2.0' do
     let(:prod1) do
       Fever::ReserveProducer.new(10.0, Merit::Flex::Reserve.new(10.0), input_capacity: 2.0)

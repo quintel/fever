@@ -14,12 +14,21 @@ module Fever
     #
     # Returns a calculator.
     def initialize(consumer, activities)
-      @consumer   = consumer
-      @activities = activities
+      activities = [activities] unless activities.first.is_a?(Array)
 
-      @storage = activities.map(&:producer).select do |prod|
+      @consumer = consumer
+      @grouped_activities = activities
+
+      @storage = self.activities.map(&:producer).select do |prod|
         prod.respond_to?(:store_excess)
       end
+    end
+
+    # Public: All activities participating in the calcualtion.
+    #
+    # Returns an array of Fever::Activity.
+    def activities
+      @grouped_activities.flatten
     end
 
     # Public: Calculates demand and supply for a single frame.
@@ -28,11 +37,17 @@ module Fever
     def calculate_frame(frame)
       demand = @consumer.demand_at(frame)
 
-      @activities.each do |activity|
-        @consumer.receive(
-          frame,
-          activity.request(frame, demand * activity.share)
-        )
+      @grouped_activities.each do |activities|
+        assigned = 0.0
+
+        activities.each do |activity|
+          assigned += @consumer.receive(
+            frame,
+            activity.request(frame, demand * activity.share)
+          )
+        end
+
+        demand -= assigned
       end
     end
 
