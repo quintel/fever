@@ -14,8 +14,8 @@ RSpec.describe Fever::Calculator do
         expect(consumer.load_at(0)).to eq(1.0)
       end
 
-      it 'sets the producer load to 1.0' do
-        expect(producer.load_at(0)).to eq(1.0)
+      it 'sets the producer output to 1.0' do
+        expect(producer.output_at(0)).to eq(1.0)
       end
     end
 
@@ -26,8 +26,8 @@ RSpec.describe Fever::Calculator do
         expect(consumer.load_at(1)).to eq(1.5)
       end
 
-      it 'sets the producer load to 1.5' do
-        expect(producer.load_at(1)).to eq(1.5)
+      it 'sets the producer output to 1.5' do
+        expect(producer.output_at(1)).to eq(1.5)
       end
     end
   end # with producer capacity 1.5
@@ -42,8 +42,8 @@ RSpec.describe Fever::Calculator do
         expect(consumer.load_at(0)).to eq(0.5)
       end
 
-      it 'sets the producer load to 0.5' do
-        expect(producer.load_at(0)).to eq(0.5)
+      it 'sets the producer output to 0.5' do
+        expect(producer.output_at(0)).to eq(0.5)
       end
     end
 
@@ -54,8 +54,8 @@ RSpec.describe Fever::Calculator do
         expect(consumer.load_at(1)).to eq(1.0)
       end
 
-      it 'sets the producer load to 1.0' do
-        expect(producer.load_at(1)).to eq(1.0)
+      it 'sets the producer output to 1.0' do
+        expect(producer.output_at(1)).to eq(1.0)
       end
     end
 
@@ -66,8 +66,8 @@ RSpec.describe Fever::Calculator do
         expect(consumer.load_at(2)).to eq(1.5)
       end
 
-      it 'sets the producer load to 1.5' do
-        expect(producer.load_at(2)).to eq(1.5)
+      it 'sets the producer output to 1.5' do
+        expect(producer.output_at(2)).to eq(1.5)
       end
     end
   end # with producer capacity 1.5, share 0.5
@@ -88,11 +88,11 @@ RSpec.describe Fever::Calculator do
       let!(:result) { calculator.calculate_frame(0) }
 
       it 'assigns 1.0 to the first producer' do
-        expect(prod1.load_at(0)).to eq(1.0)
+        expect(prod1.output_at(0)).to eq(1.0)
       end
 
       it 'assigns 0.0 to the first producer' do
-        expect(prod2.load_at(0)).to eq(0.0)
+        expect(prod2.output_at(0)).to eq(0.0)
       end
     end
 
@@ -100,11 +100,11 @@ RSpec.describe Fever::Calculator do
       let!(:result) { calculator.calculate_frame(1) }
 
       it 'assigns 2.0 to the first producer' do
-        expect(prod1.load_at(1)).to eq(2.0)
+        expect(prod1.output_at(1)).to eq(2.0)
       end
 
       it 'assigns 0.0 to the first producer' do
-        expect(prod2.load_at(1)).to eq(0.0)
+        expect(prod2.output_at(1)).to eq(0.0)
       end
     end
 
@@ -112,12 +112,12 @@ RSpec.describe Fever::Calculator do
       let!(:result) { calculator.calculate_frame(2) }
 
       it 'assigns 2.0 to the first producer' do
-        expect(prod1.load_at(2)).to eq(2.0)
+        expect(prod1.output_at(2)).to eq(2.0)
       end
 
       it 'assigns 1.0 to the first producer' do
         # 2.0 demand remains after prod1, this activity has a share of 0.5
-        expect(prod2.load_at(2)).to eq(1.0)
+        expect(prod2.output_at(2)).to eq(1.0)
       end
     end
   end

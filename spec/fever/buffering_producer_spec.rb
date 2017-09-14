@@ -14,8 +14,8 @@ module Fever
             expect(request).to eq(0.0)
           end
 
-          it 'sets the load curve to 0.0' do
-            expect { request }.not_to change { producer.load_at(0) }.from(0)
+          it 'sets the output curve to 0.0' do
+            expect { request }.not_to change { producer.output_at(0) }.from(0)
           end
 
           it 'sets the input to 5.0' do
@@ -34,8 +34,8 @@ module Fever
             expect(request).to eq(3.0)
           end
 
-          it 'sets the load curve to 3.0' do
-            expect { request }.to change { producer.load_at(0) }.from(0).to(3)
+          it 'sets the output curve to 3.0' do
+            expect { request }.to change { producer.output_at(0) }.from(0).to(3)
           end
 
           it 'sets the input to 5.0' do
@@ -54,8 +54,8 @@ module Fever
             expect(request).to eq(5.0)
           end
 
-          it 'sets the load curve to 5.0' do
-            expect { request }.to change { producer.load_at(0) }.from(0).to(5)
+          it 'sets the output curve to 5.0' do
+            expect { request }.to change { producer.output_at(0) }.from(0).to(5)
           end
 
           it 'sets the input to 5.0' do
@@ -78,8 +78,8 @@ module Fever
             expect(request).to eq(0.0)
           end
 
-          it 'sets the load curve to 0.0' do
-            expect { request }.not_to change { producer.load_at(1) }.from(0)
+          it 'sets the output curve to 0.0' do
+            expect { request }.not_to change { producer.output_at(1) }.from(0)
           end
 
           it 'sets the input to 2.5' do
@@ -99,8 +99,10 @@ module Fever
             expect(request).to eq(2.5)
           end
 
-          it 'sets the load curve to 2.5' do
-            expect { request }.to change { producer.load_at(1) }.from(0).to(2.5)
+          it 'sets the output curve to 2.5' do
+            expect { request }
+              .to change { producer.output_at(1) }
+              .from(0).to(2.5)
           end
 
           it 'sets the input to 5.0' do
@@ -122,8 +124,10 @@ module Fever
             expect(request).to eq(10.0)
           end
 
-          it 'sets the load curve to 10.0' do
-            expect { request }.to change { producer.load_at(1) }.from(0).to(10)
+          it 'sets the output curve to 10.0' do
+            expect { request }
+              .to change { producer.output_at(1) }
+              .from(0).to(10)
           end
 
           it 'sets the input to 2.5' do
@@ -144,9 +148,9 @@ module Fever
             expect(request).to eq(12.5)
           end
 
-          it 'sets the load curve to 12.5' do
+          it 'sets the output curve to 12.5' do
             expect { request }
-              .to change { producer.load_at(1) }.from(0).to(12.5)
+              .to change { producer.output_at(1) }.from(0).to(12.5)
           end
 
           it 'sets the input to 5.0' do
@@ -173,8 +177,8 @@ module Fever
           expect(request).to eq(4)
         end
 
-        it 'sets the load curve in frame 0 to 4.0' do
-          expect(producer.load_at(0)).to eq(4)
+        it 'sets the output curve in frame 0 to 4.0' do
+          expect(producer.output_at(0)).to eq(4)
         end
 
         it 'has input of 4.0' do
@@ -189,8 +193,8 @@ module Fever
           expect(request).to eq(3.5)
         end
 
-        it 'sets the load curve in frame 0 to 3.5' do
-          expect(producer.load_at(1)).to eq(3.5)
+        it 'sets the output curve in frame 0 to 3.5' do
+          expect(producer.output_at(1)).to eq(3.5)
         end
 
         it 'has input of 2.5' do

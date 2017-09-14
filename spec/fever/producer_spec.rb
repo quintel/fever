@@ -15,8 +15,8 @@ RSpec.describe Fever::Producer do
         expect(request).to eq(3)
       end
 
-      it 'sets the load curve in frame 0 to 3.0' do
-        expect(producer.load_at(0)).to eq(3)
+      it 'sets the output curve in frame 0 to 3.0' do
+        expect(producer.output_at(0)).to eq(3)
       end
 
       it 'has input of 3.0' do
@@ -30,8 +30,8 @@ RSpec.describe Fever::Producer do
           expect(second_request).to eq(1)
         end
 
-        it 'sets the load curve in frame 0 to 4.0' do
-          expect(producer.load_at(0)).to eq(4.0)
+        it 'sets the output curve in frame 0 to 4.0' do
+          expect(producer.output_at(0)).to eq(4.0)
         end
 
         it 'has input of 4.0' do
@@ -50,8 +50,8 @@ RSpec.describe Fever::Producer do
           expect(second_request).to eq(2)
         end
 
-        it 'sets the load curve in frame 0 to 5.0' do
-          expect(producer.load_at(0)).to eq(5.0)
+        it 'sets the output curve in frame 0 to 5.0' do
+          expect(producer.output_at(0)).to eq(5.0)
         end
 
         it 'permits no further requests' do
@@ -66,8 +66,8 @@ RSpec.describe Fever::Producer do
           expect(second_request).to eq(2)
         end
 
-        it 'sets the load curve in frame 0 to 5.0' do
-          expect(producer.load_at(0)).to eq(5.0)
+        it 'sets the output curve in frame 0 to 5.0' do
+          expect(producer.output_at(0)).to eq(5.0)
         end
 
         it 'permits no further requests' do
@@ -82,8 +82,8 @@ RSpec.describe Fever::Producer do
           expect(next_request).to eq(5)
         end
 
-        it 'sets the load curve in frame 1 to 5.0' do
-          expect(producer.load_at(1)).to eq(5.0)
+        it 'sets the output curve in frame 1 to 5.0' do
+          expect(producer.output_at(1)).to eq(5.0)
         end
       end
     end
@@ -171,8 +171,8 @@ RSpec.describe Fever::Producer do
         expect(request).to eq(4)
       end
 
-      it 'sets the load curve in frame 0 to 4.0' do
-        expect(producer.load_at(0)).to eq(4)
+      it 'sets the output curve in frame 0 to 4.0' do
+        expect(producer.output_at(0)).to eq(4)
       end
 
       it 'has input of 4.0' do
@@ -187,8 +187,8 @@ RSpec.describe Fever::Producer do
         expect(request).to eq(2.5)
       end
 
-      it 'sets the load curve in frame 0 to 2.5' do
-        expect(producer.load_at(1)).to eq(2.5)
+      it 'sets the output curve in frame 0 to 2.5' do
+        expect(producer.output_at(1)).to eq(2.5)
       end
 
       it 'has input of 2.5' do

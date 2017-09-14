@@ -28,7 +28,7 @@ module Fever
         break if assigned >= amount
       end
 
-      @load_curve[frame] += assigned
+      @output_curve[frame] += assigned
       assigned
     end
   end

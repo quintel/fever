@@ -15,16 +15,16 @@ module Fever
           expect(request).to eq(1.0)
         end
 
-        it 'sets the producer load to 1.0' do
-          expect { request }.to change { producer.load_at(0) }.from(0).to(1)
+        it 'sets the producer output to 1.0' do
+          expect { request }.to change { producer.output_at(0) }.from(0).to(1)
         end
 
-        it 'sets the first component load to 1.0' do
-          expect { request }.to change { comp1.load_at(0) }.from(0).to(1)
+        it 'sets the first component output to 1.0' do
+          expect { request }.to change { comp1.output_at(0) }.from(0).to(1)
         end
 
-        it 'assigns no load to the second component' do
-          expect { request }.not_to change { comp2.load_at(0) }.from(0)
+        it 'assigns no output to the second component' do
+          expect { request }.not_to change { comp2.output_at(0) }.from(0)
         end
 
         context 'requesting another 2.0' do
@@ -35,19 +35,19 @@ module Fever
             expect(next_request).to eq(2)
           end
 
-          it 'sets the producer load to 3.0' do
+          it 'sets the producer output to 3.0' do
             expect { next_request }
-              .to change { producer.load_at(0) }.from(1).to(3)
+              .to change { producer.output_at(0) }.from(1).to(3)
           end
 
-          it 'sets the first component load to 2.0' do
+          it 'sets the first component output to 2.0' do
             expect { next_request }
-              .to change { comp1.load_at(0) }.from(1).to(2)
+              .to change { comp1.output_at(0) }.from(1).to(2)
           end
 
-          it 'sets the second component load to 1.0' do
+          it 'sets the second component output to 1.0' do
             expect { next_request }
-              .to change { comp2.load_at(0) }.from(0).to(1)
+              .to change { comp2.output_at(0) }.from(0).to(1)
           end
         end
 
@@ -59,19 +59,19 @@ module Fever
             expect(next_request).to eq(5)
           end
 
-          it 'sets the producer load to 6.0' do
+          it 'sets the producer output to 6.0' do
             expect { next_request }
-              .to change { producer.load_at(0) }.from(1).to(6)
+              .to change { producer.output_at(0) }.from(1).to(6)
           end
 
-          it 'sets the first component load to 2.0' do
+          it 'sets the first component output to 2.0' do
             expect { next_request }
-              .to change { comp1.load_at(0) }.from(1).to(2)
+              .to change { comp1.output_at(0) }.from(1).to(2)
           end
 
-          it 'sets the second component load to 4.0' do
+          it 'sets the second component output to 4.0' do
             expect { next_request }
-              .to change { comp2.load_at(0) }.from(0).to(4)
+              .to change { comp2.output_at(0) }.from(0).to(4)
           end
         end
       end # requesting 1.0

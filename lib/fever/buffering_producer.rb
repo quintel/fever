@@ -26,7 +26,7 @@ module Fever
     #
     # Returns the energy available for consumption.
     def request(frame, amount)
-      @load_curve[frame] += taken = take_from_reserve(frame, amount)
+      @output_curve[frame] += taken = take_from_reserve(frame, amount)
 
       capacity = @capacity[frame]
       deficit = amount - taken
@@ -36,7 +36,7 @@ module Fever
       if deficit > 0
         instantaneous = deficit > capacity ? capacity : deficit
 
-        @load_curve[frame] += instantaneous
+        @output_curve[frame] += instantaneous
         @input_load[frame] += instantaneous
       end
 

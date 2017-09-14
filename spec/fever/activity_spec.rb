@@ -12,8 +12,8 @@ RSpec.describe Fever::Activity do
         expect(result).to eq(1.0)
       end
 
-      it 'sets the producer load to 1.0' do
-        expect(producer.load_at(0)).to eq(1.0)
+      it 'sets the producer output to 1.0' do
+        expect(producer.output_at(0)).to eq(1.0)
       end
 
       it 'sets the activity demand to 1.0' do
@@ -28,8 +28,8 @@ RSpec.describe Fever::Activity do
         expect(result).to eq(1.5)
       end
 
-      it 'sets the producer load to 1.5' do
-        expect(producer.load_at(0)).to eq(1.5)
+      it 'sets the producer output to 1.5' do
+        expect(producer.output_at(0)).to eq(1.5)
       end
 
       it 'sets the activity demand to 2.0' do

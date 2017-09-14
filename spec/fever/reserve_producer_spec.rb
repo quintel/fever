@@ -21,8 +21,8 @@ RSpec.describe Fever::ReserveProducer do
           expect(store_excess).to eq(6.0)
         end
 
-        it 'sets a load of -6' do
-          expect { store_excess }.to change { producer.load_at(0) }.to eq(-6)
+        it 'sets an output of -6' do
+          expect { store_excess }.to change { producer.output_at(0) }.to eq(-6)
         end
 
         it 'adds 6.0 energy to the reserve' do
@@ -42,8 +42,8 @@ RSpec.describe Fever::ReserveProducer do
           expect(store_excess).to eq(10.0)
         end
 
-        it 'sets a load of -10' do
-          expect { store_excess }.to change { producer.load_at(0) }.to eq(-10)
+        it 'sets an output of -10' do
+          expect { store_excess }.to change { producer.output_at(0) }.to eq(-10)
         end
 
         it 'adds 10 energy to the reserve' do
@@ -67,9 +67,9 @@ RSpec.describe Fever::ReserveProducer do
           expect(request).to eq(2.5)
         end
 
-        it 'has a load of 2.5' do
+        it 'has an output of 2.5' do
           expect { request }
-            .to change { producer.load_at(0) }.from(0).to(2.5)
+            .to change { producer.output_at(0) }.from(0).to(2.5)
         end
 
         it 'reduces stored energy to 0.0' do
@@ -85,9 +85,9 @@ RSpec.describe Fever::ReserveProducer do
           expect(request).to eq(2.5)
         end
 
-        it 'has a load of 2.5' do
+        it 'has an output of 2.5' do
           expect { request }
-            .to change { producer.load_at(0) }.from(0).to(2.5)
+            .to change { producer.output_at(0) }.from(0).to(2.5)
         end
 
         it 'reduces stored energy to 0.0' do
@@ -131,9 +131,9 @@ RSpec.describe Fever::ReserveProducer do
           expect(request).to eq(2.0)
         end
 
-        it 'has a load of 2.0' do
+        it 'has an output of 2.0' do
           expect { request }
-            .to change { producer.load_at(0) }.from(0).to(2.0)
+            .to change { producer.output_at(0) }.from(0).to(2.0)
         end
 
         it 'reduces stored energy to 5.5' do
@@ -149,9 +149,10 @@ RSpec.describe Fever::ReserveProducer do
             expect(second_request).to eq(2.5)
           end
 
-          it 'has a load of 4.5' do
+          it 'has an output of 4.5' do
             expect { second_request }
-              .to change { producer.load_at(0) }.from(2.0).to(4.5)
+              .to change { producer.output_at(0) }
+              .from(2.0).to(4.5)
           end
 
           it 'reduces stored energy to 3.0' do
@@ -168,9 +169,10 @@ RSpec.describe Fever::ReserveProducer do
           expect(request).to eq(5.0)
         end
 
-        it 'has a load of 5.0' do
+        it 'has an output of 5.0' do
           expect { request }
-            .to change { producer.load_at(0) }.from(0).to(5.0)
+            .to change { producer.output_at(0) }
+            .from(0).to(5.0)
         end
 
         it 'reduces stored energy to 2.5' do
@@ -186,9 +188,9 @@ RSpec.describe Fever::ReserveProducer do
             expect(second_request).to eq(0)
           end
 
-          it 'does not change the producer load' do
+          it 'does not change the producer output' do
             expect { second_request }
-              .not_to change { producer.load_at(0) }.from(5.0)
+              .not_to change { producer.output_at(0) }.from(5.0)
           end
 
           it 'does not reduce stored energy' do
@@ -205,9 +207,10 @@ RSpec.describe Fever::ReserveProducer do
           expect(request).to eq(5.0)
         end
 
-        it 'has a load of 5.0' do
+        it 'has an output of 5.0' do
           expect { request }
-            .to change { producer.load_at(0) }.from(0).to(5.0)
+            .to change { producer.output_at(0) }
+            .from(0).to(5.0)
         end
 
         it 'reduces stored energy to 2.5' do
@@ -235,9 +238,9 @@ RSpec.describe Fever::ReserveProducer do
         expect(store_excess).to eq(1.0)
       end
 
-      it 'sets a load of -0.75' do
+      it 'sets an output of -0.75' do
         expect { store_excess }
-          .to change { producer.load_at(0) }.from(0).to(-0.75)
+          .to change { producer.output_at(0) }.from(0).to(-0.75)
       end
 
       it 'adds 0.75 to the reserve' do
@@ -252,9 +255,10 @@ RSpec.describe Fever::ReserveProducer do
         expect(store_excess).to eq(2.0)
       end
 
-      it 'sets a load of -1.5' do
+      it 'sets an output of -1.5' do
         expect { store_excess }
-          .to change { producer.load_at(0) }.from(0).to(-1.5)
+          .to change { producer.output_at(0) }
+          .from(0).to(-1.5)
       end
 
       it 'adds 1.5 to the reserve' do
@@ -269,9 +273,10 @@ RSpec.describe Fever::ReserveProducer do
         expect(store_excess).to eq(2.0)
       end
 
-      it 'sets a load of -1.5' do
+      it 'sets an output of -1.5' do
         expect { store_excess }
-          .to change { producer.load_at(0) }.from(0).to(-1.5)
+          .to change { producer.output_at(0) }
+          .from(0).to(-1.5)
       end
 
       it 'adds 1.5 to the reserve' do
