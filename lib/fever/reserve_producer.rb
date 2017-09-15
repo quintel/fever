@@ -28,7 +28,7 @@ module Fever
       added / @input_efficiency[frame]
     end
 
-    def input_at(frame)
+    def source_at(frame)
       return 0.0 if @output_curve[frame] > 0
       @output_curve[frame].abs / @input_efficiency[frame]
     end

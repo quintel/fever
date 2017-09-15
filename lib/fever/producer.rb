@@ -21,7 +21,7 @@ module Fever
 
     # Public: Based on the input efficiency of the producer, returns how much
     # energy will be demanded in order to meet the load.
-    def input_at(frame)
+    def source_at(frame)
       @output_curve[frame] / @input_efficiency[frame]
     end
 

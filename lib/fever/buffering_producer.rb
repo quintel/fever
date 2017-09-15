@@ -17,7 +17,7 @@ module Fever
     # demand and fill up the the reserve.
     #
     # Returns a numeric.
-    def input_at(frame)
+    def source_at(frame)
       @input_load[frame] / @input_efficiency[frame]
     end
 

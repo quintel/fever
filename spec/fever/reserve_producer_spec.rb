@@ -29,9 +29,9 @@ RSpec.describe Fever::ReserveProducer do
           expect { store_excess }.to change { reserve.at(0) }.from(0).to(6)
         end
 
-        it 'has input of 6.0' do
+        it 'has source of 6.0' do
           expect { store_excess }
-            .to change { producer.input_at(0) }.from(0).to(6)
+            .to change { producer.source_at(0) }.from(0).to(6)
         end
       end
 
@@ -50,9 +50,9 @@ RSpec.describe Fever::ReserveProducer do
           expect { store_excess }.to change { reserve.at(0) }.from(0).to(10)
         end
 
-        it 'has input of 10.0' do
+        it 'has source of 10.0' do
           expect { store_excess }
-            .to change { producer.input_at(0) }.from(0).to(10)
+            .to change { producer.source_at(0) }.from(0).to(10)
         end
       end
     end # when empty

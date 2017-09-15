@@ -18,8 +18,8 @@ module Fever
             expect { request }.not_to change { producer.output_at(0) }.from(0)
           end
 
-          it 'sets the input to 5.0' do
-            expect { request }.to change { producer.input_at(0) }.from(0).to(5)
+          it 'sets the source to 5.0' do
+            expect { request }.to change { producer.source_at(0) }.from(0).to(5)
           end
 
           it 'adds 5.0 to the reserve' do
@@ -38,8 +38,8 @@ module Fever
             expect { request }.to change { producer.output_at(0) }.from(0).to(3)
           end
 
-          it 'sets the input to 5.0' do
-            expect { request }.to change { producer.input_at(0) }.from(0).to(5)
+          it 'sets the source to 5.0' do
+            expect { request }.to change { producer.source_at(0) }.from(0).to(5)
           end
 
           it 'adds 2.0 to the reserve' do
@@ -58,8 +58,8 @@ module Fever
             expect { request }.to change { producer.output_at(0) }.from(0).to(5)
           end
 
-          it 'sets the input to 5.0' do
-            expect { request }.to change { producer.input_at(0) }.from(0).to(5)
+          it 'sets the source to 5.0' do
+            expect { request }.to change { producer.source_at(0) }.from(0).to(5)
           end
 
           it 'adds nothing to the reserve' do
@@ -82,9 +82,9 @@ module Fever
             expect { request }.not_to change { producer.output_at(1) }.from(0)
           end
 
-          it 'sets the input to 2.5' do
+          it 'sets the source to 2.5' do
             expect { request }
-              .to change { producer.input_at(1) }.from(0).to(2.5)
+              .to change { producer.source_at(1) }.from(0).to(2.5)
           end
 
           it 'adds 2.5 to the reserve (total = 10)' do
@@ -105,9 +105,9 @@ module Fever
               .from(0).to(2.5)
           end
 
-          it 'sets the input to 5.0' do
+          it 'sets the source to 5.0' do
             # start = 7.5, taken 2.5, added 5.0 (volume limited)
-            expect { request }.to change { producer.input_at(1) }.from(0).to(5)
+            expect { request }.to change { producer.source_at(1) }.from(0).to(5)
           end
 
           it 'adds 2.5 to the reserve (total = 10)' do
@@ -130,10 +130,10 @@ module Fever
               .from(0).to(10)
           end
 
-          it 'sets the input to 2.5' do
+          it 'sets the source to 2.5' do
             # start = 7.5, taken 7.5, 2.5 used instantaneously,
             # added 2.5 (capacity limited)
-            expect { request }.to change { producer.input_at(1) }.from(0).to(5)
+            expect { request }.to change { producer.source_at(1) }.from(0).to(5)
           end
 
           it 'removes 5.0 from the reserve' do
@@ -153,8 +153,8 @@ module Fever
               .to change { producer.output_at(1) }.from(0).to(12.5)
           end
 
-          it 'sets the input to 5.0' do
-            expect { request }.to change { producer.input_at(1) }.from(0).to(5)
+          it 'sets the source to 5.0' do
+            expect { request }.to change { producer.source_at(1) }.from(0).to(5)
           end
 
           it 'removes everything from the reserve' do
@@ -181,8 +181,8 @@ module Fever
           expect(producer.output_at(0)).to eq(4)
         end
 
-        it 'has input of 4.0' do
-          expect(producer.input_at(0)).to eq(4)
+        it 'has source of 4.0' do
+          expect(producer.source_at(0)).to eq(4)
         end
       end
 
@@ -197,8 +197,8 @@ module Fever
           expect(producer.output_at(1)).to eq(3.5)
         end
 
-        it 'has input of 2.5' do
-          expect(producer.input_at(1)).to eq(2.5)
+        it 'has source of 2.5' do
+          expect(producer.source_at(1)).to eq(2.5)
         end
       end
     end # with a capacity of [5.0, 2.5, ...] and 1.0 stored
