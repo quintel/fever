@@ -6,8 +6,10 @@ module Fever
 
     def initialize(capacity, reserve, input_capacity: Float::INFINITY, **kwargs)
       super(capacity, **kwargs)
+
       @reserve = reserve
       @input_capacity = input_capacity
+      @input_curve = Fever.empty_curve
     end
 
     # Public: Adds an amount of energy to the reserve.
@@ -23,14 +25,14 @@ module Fever
       converted = amount * @input_efficiency[frame]
 
       added = @reserve.add(frame, converted)
-      @output_curve[frame] -= added
+      @input_curve[frame] += added
 
       added / @input_efficiency[frame]
     end
 
     def source_at(frame)
       return 0.0 if @output_curve[frame] > 0
-      @output_curve[frame].abs / @input_efficiency[frame]
+      @input_curve[frame] / @input_efficiency[frame]
     end
 
     def request(frame, amount)

@@ -8,15 +8,33 @@ module Fever
     # Public: Returns the load curve of the producer.
     attr_reader :output_curve
 
+    # Public: Curve which describes input of energy into the producer.
+    # See "input_at"
+    #
+    # Returns an array.
+    attr_reader :input_curve
+
     def initialize(capacity, input_efficiency: 1.0)
       @capacity = Fever.curve(capacity)
       @output_curve = Fever.empty_curve
+      @input_curve = @output_curve
       @input_efficiency = Fever.curve(input_efficiency)
     end
 
     # Public: Returns the load in the requested `frame`.
     def output_at(frame)
       @output_curve[frame]
+    end
+
+    # Public: The input energy for the producer for the given frame.
+    #
+    # In most producers, this will be identical to the output. However some
+    # producers, such as those which "buffer" energy prior to use, input may
+    # occur in frames before the energy is actually used.
+    #
+    # Returns a float.
+    def input_at(frame)
+      @input_curve[frame]
     end
 
     # Public: Based on the input efficiency of the producer, returns how much

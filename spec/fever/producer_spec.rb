@@ -23,6 +23,10 @@ RSpec.describe Fever::Producer do
         expect(producer.source_at(0)).to eq(3)
       end
 
+      it 'has input of 1.0' do
+        expect(producer.input_at(0)).to eq(3)
+      end
+
       context 'when requesting another 1.0' do
         let!(:second_request) { producer.request(0, 1.0) }
 
@@ -31,11 +35,15 @@ RSpec.describe Fever::Producer do
         end
 
         it 'sets the output curve in frame 0 to 4.0' do
-          expect(producer.output_at(0)).to eq(4.0)
+          expect(producer.output_at(0)).to eq(4)
         end
 
         it 'has source of 4.0' do
-          expect(producer.source_at(0)).to eq(4.0)
+          expect(producer.source_at(0)).to eq(4)
+        end
+
+        it 'has input of 4.0' do
+          expect(producer.input_at(0)).to eq(4)
         end
 
         it 'permits a third request' do
@@ -50,8 +58,12 @@ RSpec.describe Fever::Producer do
           expect(second_request).to eq(2)
         end
 
-        it 'sets the output curve in frame 0 to 5.0' do
-          expect(producer.output_at(0)).to eq(5.0)
+        it 'has output of 5.0' do
+          expect(producer.output_at(0)).to eq(5)
+        end
+
+        it 'has input of 5.0' do
+          expect(producer.input_at(0)).to eq(5)
         end
 
         it 'permits no further requests' do
@@ -66,8 +78,12 @@ RSpec.describe Fever::Producer do
           expect(second_request).to eq(2)
         end
 
-        it 'sets the output curve in frame 0 to 5.0' do
-          expect(producer.output_at(0)).to eq(5.0)
+        it 'has output of 5.0' do
+          expect(producer.output_at(0)).to eq(5)
+        end
+
+        it 'has input of 5.0' do
+          expect(producer.input_at(0)).to eq(5)
         end
 
         it 'permits no further requests' do
@@ -82,8 +98,8 @@ RSpec.describe Fever::Producer do
           expect(next_request).to eq(5)
         end
 
-        it 'sets the output curve in frame 1 to 5.0' do
-          expect(producer.output_at(1)).to eq(5.0)
+        it 'has output of 5.0 in frame 1' do
+          expect(producer.output_at(1)).to eq(5)
         end
       end
     end
@@ -124,7 +140,7 @@ RSpec.describe Fever::Producer do
       end
 
       it 'has source of 8.0' do
-        expect(producer.source_at(0)).to eq(8.0)
+        expect(producer.source_at(0)).to eq(8)
       end
     end
   end # with a capacity of 6.0 and  efficiency 0.75
@@ -140,6 +156,10 @@ RSpec.describe Fever::Producer do
       it 'has source of 1.0' do
         expect(producer.source_at(0)).to eq(1)
       end
+
+      it 'has input of 1.0' do
+        expect(producer.input_at(0)).to eq(1)
+      end
     end
 
     context 'requesting 1.0 in frame 1' do
@@ -148,6 +168,10 @@ RSpec.describe Fever::Producer do
       it 'has source of 2.0' do
         expect(producer.source_at(1)).to eq(2)
       end
+
+      it 'has input of 1.0' do
+        expect(producer.input_at(1)).to eq(1)
+      end
     end
 
     context 'requesting 1.0 in frame 2' do
@@ -155,6 +179,10 @@ RSpec.describe Fever::Producer do
 
       it 'has source of 4.0' do
         expect(producer.source_at(2)).to eq(4)
+      end
+
+      it 'has input of 1.0' do
+        expect(producer.input_at(2)).to eq(1)
       end
     end
   end # with a capacity of 6.0 and input efficiency [1, 0.5, 0.25]
@@ -171,7 +199,7 @@ RSpec.describe Fever::Producer do
         expect(request).to eq(4)
       end
 
-      it 'sets the output curve in frame 0 to 4.0' do
+      it 'has output of 4.0' do
         expect(producer.output_at(0)).to eq(4)
       end
 
@@ -187,7 +215,7 @@ RSpec.describe Fever::Producer do
         expect(request).to eq(2.5)
       end
 
-      it 'sets the output curve in frame 0 to 2.5' do
+      it 'has output of 2.5' do
         expect(producer.output_at(1)).to eq(2.5)
       end
 

@@ -3,14 +3,12 @@ module Fever
   # Energy is taken preferentially from the buffer to meet demand, and then the
   # producer will run to satisfy any remaining.
   class BufferingProducer < ReserveProducer
-    attr_reader :input_load
-
     def initialize(*)
       super
 
       # Describes the input load (after efficiency) i.e., energy used to fill
       # the buffer, plus any more required to meet demand instantaneously.
-      @input_load = Fever.empty_curve
+      @input_curve = Fever.empty_curve
     end
 
     # Public: Describes the amount of energy consumed to fulfil instantaneous
@@ -18,7 +16,7 @@ module Fever
     #
     # Returns a numeric.
     def source_at(frame)
-      @input_load[frame] / @input_efficiency[frame]
+      @input_curve[frame] / @input_efficiency[frame]
     end
 
     # Public: Requests the amount of energy to be consumed. Will fill up the
@@ -37,12 +35,12 @@ module Fever
         instantaneous = deficit > capacity ? capacity : deficit
 
         @output_curve[frame] += instantaneous
-        @input_load[frame] += instantaneous
+        @input_curve[frame] += instantaneous
       end
 
       # If there is still available capacity, run to fill up the buffer.
       if (remaining_cap = capacity - instantaneous) > 0
-        @input_load[frame] += @reserve.add(frame, remaining_cap)
+        @input_curve[frame] += @reserve.add(frame, remaining_cap)
       end
 
       taken + instantaneous

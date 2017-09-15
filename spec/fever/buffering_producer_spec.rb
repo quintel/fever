@@ -14,11 +14,15 @@ module Fever
             expect(request).to eq(0.0)
           end
 
-          it 'sets the output curve to 0.0' do
+          it 'has output of 0.0' do
             expect { request }.not_to change { producer.output_at(0) }.from(0)
           end
 
-          it 'sets the source to 5.0' do
+          it 'has input of 5.0' do
+            expect { request }.to change { producer.input_at(0) }.from(0).to(5)
+          end
+
+          it 'has source of 5.0' do
             expect { request }.to change { producer.source_at(0) }.from(0).to(5)
           end
 
@@ -34,11 +38,15 @@ module Fever
             expect(request).to eq(3.0)
           end
 
-          it 'sets the output curve to 3.0' do
+          it 'has output of 3.0' do
             expect { request }.to change { producer.output_at(0) }.from(0).to(3)
           end
 
-          it 'sets the source to 5.0' do
+          it 'has input of 5.0' do
+            expect { request }.to change { producer.input_at(0) }.from(0).to(5)
+          end
+
+          it 'has source of 5.0' do
             expect { request }.to change { producer.source_at(0) }.from(0).to(5)
           end
 
@@ -54,11 +62,15 @@ module Fever
             expect(request).to eq(5.0)
           end
 
-          it 'sets the output curve to 5.0' do
+          it 'has output of 5.0' do
             expect { request }.to change { producer.output_at(0) }.from(0).to(5)
           end
 
-          it 'sets the source to 5.0' do
+          it 'has input of 5.0' do
+            expect { request }.to change { producer.input_at(0) }.from(0).to(5)
+          end
+
+          it 'has source of 5.0' do
             expect { request }.to change { producer.source_at(0) }.from(0).to(5)
           end
 
@@ -82,6 +94,12 @@ module Fever
             expect { request }.not_to change { producer.output_at(1) }.from(0)
           end
 
+          it 'has input of 2.5' do
+            expect { request }
+              .to change { producer.input_at(1) }
+              .from(0).to(2.5)
+          end
+
           it 'sets the source to 2.5' do
             expect { request }
               .to change { producer.source_at(1) }.from(0).to(2.5)
@@ -103,6 +121,11 @@ module Fever
             expect { request }
               .to change { producer.output_at(1) }
               .from(0).to(2.5)
+          end
+
+          it 'sets the input to 5.0' do
+            # start = 7.5, taken 2.5, added 5.0 (volume limited)
+            expect { request }.to change { producer.input_at(1) }.from(0).to(5)
           end
 
           it 'sets the source to 5.0' do
@@ -130,9 +153,13 @@ module Fever
               .from(0).to(10)
           end
 
-          it 'sets the source to 2.5' do
+          it 'sets the input to 2.5' do
             # start = 7.5, taken 7.5, 2.5 used instantaneously,
             # added 2.5 (capacity limited)
+            expect { request }.to change { producer.input_at(1) }.from(0).to(5)
+          end
+
+          it 'sets the source to 2.5' do
             expect { request }.to change { producer.source_at(1) }.from(0).to(5)
           end
 
@@ -151,6 +178,10 @@ module Fever
           it 'sets the output curve to 12.5' do
             expect { request }
               .to change { producer.output_at(1) }.from(0).to(12.5)
+          end
+
+          it 'sets the input to 5.0' do
+            expect { request }.to change { producer.input_at(1) }.from(0).to(5)
           end
 
           it 'sets the source to 5.0' do
@@ -181,6 +212,10 @@ module Fever
           expect(producer.output_at(0)).to eq(4)
         end
 
+        it 'has input of 4.0' do
+          expect(producer.input_at(0)).to eq(4)
+        end
+
         it 'has source of 4.0' do
           expect(producer.source_at(0)).to eq(4)
         end
@@ -193,8 +228,12 @@ module Fever
           expect(request).to eq(3.5)
         end
 
-        it 'sets the output curve in frame 0 to 3.5' do
+        it 'has output of 3.5' do
           expect(producer.output_at(1)).to eq(3.5)
+        end
+
+        it 'has input of 2.5' do
+          expect(producer.input_at(1)).to eq(2.5)
         end
 
         it 'has source of 2.5' do
@@ -203,5 +242,76 @@ module Fever
       end
     end # with a capacity of [5.0, 2.5, ...] and 1.0 stored
 
+    context 'with capacity of 2.0 and input efficiency of 0.5' do
+      let(:reserve)  { Merit::Flex::Reserve.new(1.0) }
+
+      let(:producer) do
+        BufferingProducer.new(2.0, reserve, input_efficiency: 0.5)
+      end
+
+      context 'requesting 1.0 from an empty buffer' do
+        let(:request) { producer.request(0, 1.0) }
+
+        it 'has output of 1.0' do
+          expect { request }.to change { producer.output_at(0) }.from(0).to(1)
+        end
+
+        it 'has input of 2.0' do
+          expect { request }.to change { producer.input_at(0) }.from(0).to(2)
+        end
+
+        it 'has source of 4.0' do
+          expect { request }.to change { producer.source_at(0) }.from(0).to(4)
+        end
+
+        it 'adds 1.0 from the reserve' do
+          expect { request }.to change { reserve.at(0) }.from(0).to(1)
+        end
+      end
+
+      context 'requesting 2.0 with 0.5 stored' do
+        before { reserve.add(0, 0.5) }
+
+        let(:request) { producer.request(0, 2.0) }
+
+        it 'has output of 2.0' do
+          expect { request }.to change { producer.output_at(0) }.from(0).to(2)
+        end
+
+        it 'has input of 2.0' do
+          expect { request }.to change { producer.input_at(0) }.from(0).to(2)
+        end
+
+        it 'has source of 4.0' do
+          expect { request }.to change { producer.source_at(0) }.from(0).to(4)
+        end
+
+        it 'does not change the reserve' do
+          expect { request }.to_not change { reserve.at(0) }.from(0.5)
+        end
+      end
+
+      context 'requesting 3.0 with 1.0 stored' do
+        before { reserve.add(0, 1.0) }
+
+        let(:request) { producer.request(0, 3.0) }
+
+        it 'has output of 3.0' do
+          expect { request }.to change { producer.output_at(0) }.from(0).to(3)
+        end
+
+        it 'has input of 2.0' do
+          expect { request }.to change { producer.input_at(0) }.from(0).to(2)
+        end
+
+        it 'has source of 4.0' do
+          expect { request }.to change { producer.source_at(0) }.from(0).to(4)
+        end
+
+        it 'empties the reserve' do
+          expect { request }.to change { reserve.at(0) }.from(1).to(0)
+        end
+      end
+    end # with capacity of 2.0 and input efficiency of 0.5
   end
 end # Fever

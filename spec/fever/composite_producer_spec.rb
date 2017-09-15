@@ -23,8 +23,16 @@ module Fever
           expect { request }.to change { comp1.output_at(0) }.from(0).to(1)
         end
 
+        it 'sets the first component input to 1.0' do
+          expect { request }.to change { comp1.input_at(0) }.from(0).to(1)
+        end
+
         it 'assigns no output to the second component' do
           expect { request }.not_to change { comp2.output_at(0) }.from(0)
+        end
+
+        it 'assigns no input to the second component' do
+          expect { request }.not_to change { comp2.input_at(0) }.from(0)
         end
 
         context 'requesting another 2.0' do
@@ -38,6 +46,11 @@ module Fever
           it 'sets the producer output to 3.0' do
             expect { next_request }
               .to change { producer.output_at(0) }.from(1).to(3)
+          end
+
+          it 'sets the producer input to 3.0' do
+            expect { next_request }
+              .to change { producer.input_at(0) }.from(1).to(3)
           end
 
           it 'sets the first component output to 2.0' do
@@ -62,6 +75,11 @@ module Fever
           it 'sets the producer output to 6.0' do
             expect { next_request }
               .to change { producer.output_at(0) }.from(1).to(6)
+          end
+
+          it 'sets the producer input to 6.0' do
+            expect { next_request }
+              .to change { producer.input_at(0) }.from(1).to(6)
           end
 
           it 'sets the first component output to 2.0' do
