@@ -31,7 +31,7 @@ module Fever
     end
 
     def source_at(frame)
-      return 0.0 if @output_curve[frame] > 0
+      return 0.0 if @output_curve[frame].positive?
       @input_curve[frame] / @input_efficiency[frame]
     end
 

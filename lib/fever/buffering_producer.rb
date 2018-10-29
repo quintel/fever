@@ -31,7 +31,7 @@ module Fever
       instantaneous = 0.0
 
       # If demand exceeds the amount stored, run the heat pump...
-      if deficit > 0
+      if deficit.positive?
         instantaneous = deficit > capacity ? capacity : deficit
 
         @output_curve[frame] += instantaneous
@@ -39,7 +39,7 @@ module Fever
       end
 
       # If there is still available capacity, run to fill up the buffer.
-      if (remaining_cap = capacity - instantaneous) > 0
+      if (remaining_cap = capacity - instantaneous).positive?
         @input_curve[frame] += @reserve.add(frame, remaining_cap)
       end
 
