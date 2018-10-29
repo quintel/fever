@@ -3,7 +3,6 @@ module Fever
   # is to be produced, and by what.
   class Calculator
     attr_reader :consumer
-    attr_reader :activities
 
     # Public: Creates a new Calculator.
     #
