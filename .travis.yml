@@ -3,7 +3,7 @@ language: ruby
 env:
   - CI=true
 rvm:
-  - 2.3
   - 2.4
+  - 2.5
 bundler_args: "--without extras"
 before_install: gem install bundler -v 1.15.1
