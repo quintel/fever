@@ -57,7 +57,7 @@ module Fever
     # Returns a numeric.
     def outstanding_demand
       return 0.0 unless @deferments[0]
-      @deferments.map(&:amount).reduce(:+)
+      @deferments.sum(0.0, &:amount)
     end
 
     # Internal: Given energy, attempts to fulfil deferred demand stored in
