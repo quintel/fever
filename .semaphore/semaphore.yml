@@ -20,3 +20,5 @@ blocks:
               values:
                 - 2.7.5
                 - 3.1.1
+      secrets:
+        - name: Fever
