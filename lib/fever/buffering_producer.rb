@@ -3,7 +3,7 @@ module Fever
   # Energy is taken preferentially from the buffer to meet demand, and then the
   # producer will run to satisfy any remaining.
   class BufferingProducer < ReserveProducer
-    def initialize(*)
+    def initialize(*, **)
       super
 
       # Describes the input load (after efficiency) i.e., energy used to fill

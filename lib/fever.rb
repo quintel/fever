@@ -1,8 +1,3 @@
-require 'bundler'
-Bundler.setup(:default)
-
-require 'merit'
-
 require 'fever/producer'
 
 require 'fever/activity'
@@ -13,6 +8,8 @@ require 'fever/deferrable_activity'
 require 'fever/reserve_producer'
 require 'fever/buffering_producer'
 require 'fever/version'
+
+require 'merit'
 
 # Models the behaviour of heat processes (household heaters, heat buffers,
 # etc) on a time-resolved basis.
