@@ -9,7 +9,7 @@ end
 gemspec
 
 # Merit is here since it isn't currently published to RubyGems.org
-gem 'quintel_merit', ref: 'e59980a', github: 'quintel/merit' #TODO: update once merged to master
+gem 'quintel_merit', ref: 'aae77e0', github: 'quintel/merit'
 
 # Development- and test-related non-essentials.
 group(:extras) do
