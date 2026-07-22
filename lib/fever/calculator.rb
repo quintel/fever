@@ -37,8 +37,10 @@ module Fever
       demand = @consumer.demand_at(frame)
 
       @grouped_activities.each do |activities|
-        assigned = activities.sum(0.0) do |activity|
-          activity.request(frame, demand * activity.share)
+        assigned = 0.0
+
+        activities.each do |activity|
+          assigned += activity.request(frame, demand * activity.share)
         end
 
         @consumer.receive(frame, assigned)
